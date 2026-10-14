@@ -128,12 +128,8 @@ pub async fn register_defaults(auth_issuer: &str, cron_url: &str, service_type: 
     if schedules.is_empty() {
         return;
     }
-    let caller = match crate::build_caller(
-        auth_issuer,
-        cron_url,
-        &format!("{service_type}-cron"),
-    )
-    .await
+    let caller = match crate::build_caller(auth_issuer, cron_url, &format!("{service_type}-cron"))
+        .await
     {
         Ok(c) => c,
         Err(e) => {
