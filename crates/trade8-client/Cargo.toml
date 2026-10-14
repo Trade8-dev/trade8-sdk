@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: Copyright Logically Magic Inc. <hello@logicallymagic.com>
+# SPDX-FileCopyrightText: Copyright Hamid Jahanzad <Hamid@Jahanzad.com>
+# SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
+# SPDX-License-Identifier: Apache-2.0
+
+[package]
+name = "trade8-client"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+uuid = { workspace = true }
+# Platform surface via the namespace facade (principles §2.1):
+# bus client = sentin8::bus::client, middleware + m2m = sentin8::{middleware,auth::m2m}.
+sentin8 = { workspace = true }
+sqlx = { workspace = true }
+futures-util = { workspace = true }
+tracing = { workspace = true }
+reqwest = { workspace = true }
