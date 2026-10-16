@@ -24,7 +24,7 @@ graph LR
     P[Price raw i128 + scale] --> T[tick_size_for / is_on_tick]
     P --> N[checked_notional against Qty]
     Q[Qty raw u64 + scale] --> N
-    W[wire: serde {raw, scale} + decimal strings] --> P
+    W["wire: serde {raw, scale} + decimal strings"] --> P
 ```
 
 ## 4. Key Traits and Data Structures
