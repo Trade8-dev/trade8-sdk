@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 
 /// Every order-rejection reason the Desk can emit. Numeric codes keep a
 /// stable ordering; the string form is the platform registration key.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum RejectCode {
     // structural (Desk, desk design §4.2 step 1)
     #[serde(rename = "trade8_symbol_unknown")]
@@ -169,7 +169,7 @@ impl RejectCode {
 
 /// A rejection payload - carried by `trade8:desk:order:rejected` and the
 /// API 422 body.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct Rejection {
     pub code: RejectCode,
     pub message: String,

@@ -19,7 +19,7 @@ use crate::enums::FeedType;
 
 /// L1 top-of-quote update - `trade8:feed:quote:updated` payload
 ///.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct QuoteUpdate {
     pub symbol_id: Uuid,
     pub symbol_name: String,
@@ -42,7 +42,7 @@ impl QuoteUpdate {
 
 /// L2 price-level delta - `trade8:feed:depth:updated` payload
 ///.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct DepthUpdate {
     pub symbol_id: Uuid,
     pub symbol_name: String,
@@ -62,7 +62,7 @@ pub struct DepthUpdate {
 
 /// Auction imbalance - `trade8:feed:imbalance:updated` payload
 ///.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct ImbalanceUpdate {
     pub symbol_id: Uuid,
     pub symbol_name: String,
@@ -82,7 +82,7 @@ pub struct ImbalanceUpdate {
 
 /// Consolidated trade print - `trade8:feed:trade:printed` payload; the
 /// Bars aggregation input.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct TradePrint {
     pub symbol_id: Uuid,
     pub symbol_name: String,
@@ -94,7 +94,7 @@ pub struct TradePrint {
 }
 
 /// A closed OHLCV bar - `trade8:bars:bar:closed` payload.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct Bar {
     pub symbol_id: Uuid,
     pub interval: BarInterval,
@@ -137,7 +137,7 @@ impl Bar {
 }
 
 /// Bar intervals - the fixed service set (bars design §2).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum BarInterval {
     #[serde(rename = "1s")]
     S1,
@@ -189,7 +189,7 @@ impl BarInterval {
 }
 
 /// A fired price alert - `trade8:feed:alert:fired` payload.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct AlertFired {
     pub alert_id: Uuid,
     pub rule_id: Uuid,
@@ -203,7 +203,7 @@ pub struct AlertFired {
 }
 
 /// Feed-link health - `trade8:feed:feed:status` payload.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct FeedStatus {
     pub link_id: Uuid,
     pub link_name: String,
@@ -214,7 +214,7 @@ pub struct FeedStatus {
     pub detail: Option<String>,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum FeedState {
     #[serde(rename = "up")]
     Up,

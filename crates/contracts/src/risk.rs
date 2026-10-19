@@ -14,7 +14,7 @@ use crate::enums::{RiskLimitKind, TraderState};
 
 /// The order-mutation context Risk needs to authorize. Carried in full so
 /// Risk stays stateless on the request path.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct AuthorizeRequest {
     pub env_id: Uuid,
     /// The acting user (Auth sub) - limits/trader-state scope key.
@@ -60,7 +60,7 @@ pub struct AuthorizeRequest {
 
 /// What the caller is asking to do (trader-state + period rules branch on
 /// this).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum Intent {
     #[serde(rename = "open")]
     Open,
@@ -74,7 +74,7 @@ pub enum Intent {
 
 /// One check outcome in the verdict trace (persisted on reject for the
 /// audit trail - desk design §4.2).
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct CheckResult {
     /// Which check family (risk design §2: 1..10).
     pub check: CheckKind,
@@ -83,7 +83,7 @@ pub struct CheckResult {
     pub detail: serde_json::Value,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum CheckKind {
     #[serde(rename = "trader_state")]
     TraderState,
@@ -112,7 +112,7 @@ pub enum CheckKind {
 }
 
 /// The verdict - one `authorize` call, all checks, itemized.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct AuthorizeVerdict {
     pub allowed: bool,
     /// The first failing check's mapped code (None when allowed).
@@ -147,7 +147,7 @@ impl AuthorizeVerdict {
 
 /// A limit row as loaded into Risk's snapshot cache
 /// (risk design §4 - arc-swap snapshots, no DB on the authorize path).
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct LimitRow {
     pub usr_id: Option<String>,
     pub office_id: Option<String>,

@@ -5561,6 +5561,7 @@ dependencies = [
  "serde",
  "serde_json",
  "trade8-fixed",
+ "utoipa",
  "uuid",
 ]
 
@@ -5592,6 +5593,7 @@ name = "trade8-fixed"
 version = "0.1.0"
 dependencies = [
  "serde",
+ "utoipa",
 ]
 
 [[package]]

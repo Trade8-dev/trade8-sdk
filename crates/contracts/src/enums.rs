@@ -18,7 +18,7 @@ use serde::{Deserialize, Serialize};
 
 /// Order side. `T` (trade both sides / short-exempt cross) is preserved
 /// from .
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum Side {
     #[serde(rename = "b")]
     Buy,
@@ -55,7 +55,7 @@ impl Side {
 // ---------------------------------------------------------------------------
 
 /// Order types` on ORDERS + OrderNew).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum OrderType {
     #[serde(rename = "1")]
     Market,
@@ -100,7 +100,7 @@ impl OrderType {
 }
 
 /// Time-in-force: `overnight` and `on_close` survive sessions; `day` sweeps at session close.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum TimeInForce {
     #[serde(rename = "0")]
     Day,
@@ -131,7 +131,7 @@ impl TimeInForce {
 // Order state (Desk state machine, desk design §4.1)
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum OrderState {
     #[serde(rename = "pending")]
     Pending,
@@ -192,7 +192,7 @@ impl OrderState {
 
 /// Trading state of a trader, owned by Risk (not identity).
 /// CMP→DisabledByCompliance, DIS→Disabled, INA→Inactive.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum TraderState {
     #[serde(rename = "active")]
     Active,
@@ -237,7 +237,7 @@ impl TraderState {
 // Session state (desk design §4.5)
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum SessionState {
     #[serde(rename = "preopen")]
     Preopen,
@@ -280,7 +280,7 @@ impl SessionState {
 // ---------------------------------------------------------------------------
 
 /// Broker order-entry protocol.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum DestinationProtocol {
     #[serde(rename = "fix42")]
     Fix42,
@@ -291,7 +291,7 @@ pub enum DestinationProtocol {
 }
 
 /// Destination visibility`).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum DestinationVisibility {
     #[serde(rename = "b")]
     Broadcast, // visible
@@ -302,7 +302,7 @@ pub enum DestinationVisibility {
 }
 
 /// Gateway environment mode.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum GatewayMode {
     #[serde(rename = "live")]
     Live,
@@ -314,7 +314,7 @@ pub enum GatewayMode {
 // Fill liquidity
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum LiquidityFlag {
     #[serde(rename = "A")]
     Added,
@@ -328,7 +328,7 @@ pub enum LiquidityFlag {
 // L2 feed type
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum FeedType {
     #[serde(rename = "book")]
     Book,
@@ -350,7 +350,7 @@ pub enum FeedType {
 // Asset class
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum AssetClass {
     #[serde(rename = "equity")]
     Equity,
@@ -366,7 +366,7 @@ pub enum AssetClass {
 // Risk limit kinds
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum RiskLimitKind {
     #[serde(rename = "buying_power")]
     BuyingPower,
@@ -386,7 +386,7 @@ pub enum RiskLimitKind {
 // Risk levels / actions
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum RiskAction {
     #[serde(rename = "notify")]
     Notify,
@@ -402,7 +402,7 @@ pub enum RiskAction {
 // Borrow category
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum BorrowCategory {
     #[serde(rename = "etb")]
     Etb,

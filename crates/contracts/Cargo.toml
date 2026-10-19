@@ -17,3 +17,4 @@ serde_json = { workspace = true }
 trade8-fixed = { workspace = true }
 uuid = { workspace = true }
 chrono = { workspace = true }
+utoipa = { workspace = true }

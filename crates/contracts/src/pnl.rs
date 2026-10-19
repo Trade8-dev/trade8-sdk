@@ -15,7 +15,7 @@ use uuid::Uuid;
 /// Live position for (trader, symbol) - `trade8:pnl:position:updated`
 /// payload. Signed size: positive long, negative short (the PnL concept
 /// of a signed position; trade8 order quantities themselves are unsigned).
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct Position {
     pub usr_id: String,
     pub office_id: String,
@@ -54,7 +54,7 @@ impl Position {
 
 /// Per-symbol day resume - the `pnl.symbol_resume` row shape
 /// (gross/fees/net/shares/max_net/lft).
-#[derive(Debug, Clone, Copy, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct SymbolResume {
     pub gross: i128,
     pub fees: i128,
@@ -90,7 +90,7 @@ impl SymbolResume {
 
 /// Trader day summary - `trade8:pnl:trader:summary` payload;
 /// `ProfitAndLoss` field-for-field.
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct TraderPnlSummary {
     pub usr_id: String,
     pub office_id: String,
@@ -106,7 +106,7 @@ pub struct TraderPnlSummary {
 }
 
 /// Office roll-up - `trade8:pnl:office:summary` payload.
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct OfficePnlSummary {
     pub office_id: String,
     pub trading_date: String,
@@ -119,7 +119,7 @@ pub struct OfficePnlSummary {
 
 /// Opening balance carried across sessions - `pnl.opening_balance`
 /// row shape.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct OpeningBalance {
     pub trading_date: String,
     pub usr_id: String,
@@ -133,7 +133,7 @@ pub struct OpeningBalance {
 }
 
 /// Overnight reconciliation result: expected vs found, with a mismatch flag.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct OvernightVerification {
     pub trading_date: String,
     pub symbol_id: Uuid,

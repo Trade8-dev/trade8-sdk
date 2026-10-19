@@ -23,7 +23,7 @@ use crate::enums::*;
 
 /// A normalized order. This is the full self-contained snapshot carried by
 /// `trade8:desk:order:submitted` and persisted in `desk."order"`.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct Order {
     pub order_id: Uuid,
     pub client_order_id: String,
@@ -73,7 +73,7 @@ impl Order {
 }
 
 /// New-order request as submitted through the BFF/WS.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct NewOrderRequest {
     /// Client-generated; dedupe key for resubmit-after-reconnect.
     pub client_order_id: String,
@@ -93,7 +93,7 @@ pub struct NewOrderRequest {
 
 /// Cancel-replace request: cancels the referenced order and submits the
 /// replacement in one chain (desk design §4.1).
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct ReplaceOrderRequest {
     pub order_id: Uuid,
     pub client_order_id: String,
@@ -103,7 +103,7 @@ pub struct ReplaceOrderRequest {
 
 /// A normalized fill/exec - the payload of `trade8:router:fill:executed`,
 /// persisted in `router.order_transaction`.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct Fill {
     pub transaction_id: Uuid,
     pub order_id: Uuid,
@@ -120,7 +120,7 @@ pub struct Fill {
 }
 
 /// Fill terminal classes.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, utoipa::ToSchema)]
 pub enum FillState {
     #[serde(rename = "fill")]
     Fill,
@@ -135,7 +135,7 @@ pub enum FillState {
 /// Per-fill fee breakdown - fee columns
 /// (SEC/activity/gateway/execution/clearing + currency), kept as scaled
 /// i128 amounts with a currency code each.
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct FeeBreakdown {
     pub sec_fee: Option<ScaledMoney>,
     pub activity_fee: Option<ScaledMoney>,
@@ -145,7 +145,7 @@ pub struct FeeBreakdown {
 }
 
 /// A scaled monetary amount + its currency.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct ScaledMoney {
     /// Scaled integer (×10⁴ money scale by default).
     pub amount: i128,
@@ -186,7 +186,7 @@ impl FeeBreakdown {
 }
 
 /// Blotter row (API read shape).
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct OrderSummary {
     pub order_id: Uuid,
     pub client_order_id: String,
@@ -203,7 +203,7 @@ pub struct OrderSummary {
 }
 
 /// Flatten instruction (desk design §5.1; ).
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct FlattenRequest {
     /// Trader to flatten (self by default; office scope needs manager scope).
     pub usr_id: Option<String>,
@@ -214,7 +214,7 @@ pub struct FlattenRequest {
     pub strategy: FlattenStrategy,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct FlattenStrategy {
     pub attempts: u16,
     /// Hold time between attempts (ms).

@@ -38,7 +38,7 @@ const fn pow10(exp: u8) -> i128 {
 
 /// A scaled price. The `scale` (decimal digits) is carried per value so
 /// instruments with different scales never mix silently.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct Price {
     /// Scaled integer value (ticks).
     pub raw: i128,
@@ -196,7 +196,7 @@ impl Price {
 
 /// A decimal-scaled quantity. Equities: scale 0 (integer shares);
 /// crypto: scale 8.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, utoipa::ToSchema)]
 pub struct Qty {
     /// Scaled integer value.
     pub raw: u64,
