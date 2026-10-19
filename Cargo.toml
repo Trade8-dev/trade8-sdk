@@ -22,7 +22,6 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/Trade8-dev/trade8"
 rust-version = "1.85"
 
-
 [workspace.dependencies]
 # full platform dep table (mirrors sentin8-sdk) + intra-vertical
 # contracts path deps. Platform sentin8-* crates arrive via the
@@ -70,7 +69,7 @@ dotenvy = "0.15"
 prometheus = "0.13"
 opentelemetry = "0.27"
 validator = { version = "0.18", features = ["derive"] }
-sentin8 = { git = "https://github.com/Sentin8/sentin8-sdk", tag = "sdk-v0.6.6" }
+sentin8 = { git = "https://github.com/Sentin8/sentin8-sdk", tag = "sdk-v0.6.7" }
 utoipa = { version = "5", features = ["chrono", "uuid"] }
 trade8-fixed = { path = "crates/fixed" }
 trade8-contracts = { path = "crates/contracts" }
