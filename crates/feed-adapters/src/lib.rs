@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! trade8 feed adapters — pluggable vendor-feed parsers (feed design §4.1).
+//! trade8 feed adapters - pluggable vendor-feed parsers (feed design §4.1).
 //!
 //! One trait, many impls: ITCH-style binary listeners, IDC-format feeds,
 //! crypto WebSocket books, and the sim/replay adapter for tests and demos.
@@ -21,10 +21,10 @@ use std::sync::Arc;
 
 // Leaf→leaf import: raw crate path by exception (see
 // trade8-contracts order.rs). The `trade8::` facade depends on
-// this crate — importing it here would be a dependency cycle.
+// this crate - importing it here would be a dependency cycle.
 use trade8_fixed::Price;
 
-/// Adapter kinds — mirrors `trade8_feed_link.kind` values.
+/// Adapter kinds - mirrors `trade8_feed_link.kind` values.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum AdapterKind {
     Itch,
@@ -67,7 +67,7 @@ pub struct RawQuotePacket {
     pub bytes: Vec<u8>,
 }
 
-/// Adapter configuration — one `trade8_feed_link` row's runtime form.
+/// Adapter configuration - one `trade8_feed_link` row's runtime form.
 /// Credentials are **secret references**, never values (platform rule).
 #[derive(Debug, Clone, PartialEq)]
 pub struct FeedLinkConfig {
@@ -84,7 +84,7 @@ pub struct FeedLinkConfig {
 }
 
 /// The per-link outbound channel the adapter writes raw packets to.
-/// Bounded — a slow normalizer backpressures the adapter task.
+/// Bounded - a slow normalizer backpressures the adapter task.
 pub type RawSender = Arc<tokio::sync::mpsc::Sender<RawQuotePacket>>;
 
 /// Adapter errors (supervision/restart policy consumes these).
@@ -110,7 +110,7 @@ pub trait FeedAdapter: Send + Sync {
 
     /// Stream packets into `tx` until error/close. `config.credentials_ref`
     /// is resolved to actual credentials by the **service** (which holds
-    /// the Storage client) and passed via `credentials` — adapters never
+    /// the Storage client) and passed via `credentials` - adapters never
     /// touch secrets storage.
     fn run(
         &self,
@@ -127,7 +127,7 @@ pub type BoxFuture<T> = std::pin::Pin<Box<dyn std::future::Future<Output = T> + 
 // Sim/replay adapter
 // ---------------------------------------------------------------------------
 
-/// A scripted packet timeline — deterministic replay for tests/demos.
+/// A scripted packet timeline - deterministic replay for tests/demos.
 #[derive(Debug, Clone, PartialEq)]
 pub struct SimScript {
     /// (delay_before_packet_ms, source_id, payload)
@@ -172,7 +172,7 @@ impl FeedAdapter for SimAdapter {
                     bytes,
                 };
                 if tx.send(pkt).await.is_err() {
-                    return Ok(()); // consumer gone — clean stop
+                    return Ok(()); // consumer gone - clean stop
                 }
             }
             Ok(())
@@ -196,7 +196,7 @@ pub fn hex_decode(s: &str) -> Option<Vec<u8>> {
 }
 
 // ---------------------------------------------------------------------------
-// Raw-record codecs (ITCH-style + IDC-style) — byte truth preserved
+// Raw-record codecs (ITCH-style + IDC-style) - byte truth preserved
 // ---------------------------------------------------------------------------
 
 /// Parsed record kinds the normalizer consumes (post-adapter).
@@ -245,7 +245,7 @@ pub enum RawRecord {
 }
 
 /// Parse an ITCH-style packet: `u8 record_tag | u8 flag | symbol[8] |
-/// venue_ts_ms u32be | fields…` — the simplified internal ITCH-record
+/// venue_ts_ms u32be | fields…` - the simplified internal ITCH-record
 /// layout the sim harness and ITCH listener share. Record tags:
 /// `'L'` BBO, `'D'` level, `'P'` print, `'I'` imbalance.
 ///
@@ -410,21 +410,21 @@ pub fn adapter_for(kind: AdapterKind) -> Arc<dyn FeedAdapter> {
         AdapterKind::Idc => Arc::new(IdcAdapter),
         AdapterKind::CryptoWs => Arc::new(CryptoWsAdapter),
         // FIX-MD rides the router's session shards (a FIX session that
-        // emits market data) — the interim sim transport carries the
+        // emits market data) - the interim sim transport carries the
         // record path until the socket shard lands.
         AdapterKind::FixMd => Arc::new(SimAdapter),
     }
 }
 
 // ---------------------------------------------------------------------------
-// ITCH listener — SoupBinTCP-style framed binary records
+// ITCH listener - SoupBinTCP-style framed binary records
 // ---------------------------------------------------------------------------
 
 /// ITCH-style TCP listener: connects to `config.endpoint`
 /// (host:port), reads length-prefixed frames (u16be len | payload), wraps
 /// each payload as a RawQuotePacket, and parses with the shared
 /// `parse_itch_record` codec. On sequence gap, emits a retransmission
-/// request frame (`'R' | seq u32be`) — the venue replies with the missed
+/// request frame (`'R' | seq u32be`) - the venue replies with the missed
 /// records; unacked gaps surface as feed health events (F1.11).
 pub struct ItchAdapter;
 
@@ -481,7 +481,7 @@ impl FeedAdapter for ItchAdapter {
 }
 
 // ---------------------------------------------------------------------------
-// IDC-format adapter — record stream over a line/TCP endpoint
+// IDC-format adapter - record stream over a line/TCP endpoint
 // ---------------------------------------------------------------------------
 
 /// IDC-format adapter: connects to `config.endpoint`, reads
@@ -521,7 +521,7 @@ impl FeedAdapter for IdcAdapter {
             while let Ok(Some(line)) = lines.next_line().await {
                 let parts: Vec<&str> = line.split('|').collect();
                 if parts.len() < 6 {
-                    continue; // malformed line — skip, health loop counts
+                    continue; // malformed line - skip, health loop counts
                 }
                 let (kind, symbol) = (parts[0], parts[1]);
                 let price: i64 = parts[2].parse().unwrap_or(0);
@@ -531,9 +531,9 @@ impl FeedAdapter for IdcAdapter {
                 // Convert to the internal record layout.
                 let bytes = match kind {
                     "B" => {
-                        // BBO: bid ask sizes arrive as separate halves —
+                        // BBO: bid ask sizes arrive as separate halves -
                         // the IDC line format here carries both: B|sym|
-                        // bid_px|bid_sz|…|ask… — simplified: parts[2]=bid,
+                        // bid_px|bid_sz|…|ask… - simplified: parts[2]=bid,
                         // parts[3]=ask_size; ask_px in parts[6] if present.
                         let ask_px: i64 = parts
                             .get(6)
@@ -560,7 +560,7 @@ impl FeedAdapter for IdcAdapter {
 }
 
 // ---------------------------------------------------------------------------
-// Crypto WS adapter — order-book snapshot+delta, trades
+// Crypto WS adapter - order-book snapshot+delta, trades
 // ---------------------------------------------------------------------------
 
 /// Crypto WebSocket adapter (Coinbase/Bitfinex-style): connects to
@@ -597,7 +597,7 @@ impl FeedAdapter for CryptoWsAdapter {
                 .and_then(|v| v.as_str())
                 .unwrap_or("BTC-USD")
                 .to_string();
-            // Plain TCP + minimal WS framing (handshake + text frames) —
+            // Plain TCP + minimal WS framing (handshake + text frames) -
             // avoids a heavy ws dependency; the record path is JSON text.
             use tokio::io::{AsyncReadExt, AsyncWriteExt};
             use tokio::net::TcpStream;
@@ -770,7 +770,7 @@ async fn write_ws_text(stream: &mut tokio::net::TcpStream, text: &str) -> Result
         .map_err(|e| AdapterError::Transport(format!("ws frame write: {e}")))
 }
 
-/// A (non-secret, throwaway) Sec-WebSocket-Key — 16 random-ish bytes
+/// A (non-secret, throwaway) Sec-WebSocket-Key - 16 random-ish bytes
 /// base64'd. Connection authenticity is TLS's job; this only satisfies
 /// the handshake format.
 fn base64_key() -> String {

@@ -3,13 +3,13 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! trade8 FIX codec — order-entry **client role** for FIX 4.2 / FIX 4.4
+//! trade8 FIX codec - order-entry **client role** for FIX 4.2 / FIX 4.4
 //! sessions to brokers (router design §4.1).
 //!
 //! Scope: build/parse the order-entry subset the Router needs
 //! (logon, logout, heartbeat, test request, resend, seq-reset, reject,
 //! new order, cancel, replace, execution reports), with per-destination
-//! template semantics. NOT a general FIX engine — client
+//! template semantics. NOT a general FIX engine - client
 //! role only, ~2k LOC by design (master §14 decision).
 //!
 //! Golden byte tests pin the wire layouts.
@@ -80,7 +80,7 @@ impl FixMessage {
     }
 
     /// Encode a full FIX message with BeginString(8), BodyLength(9),
-    /// MsgSeqNum(34), and CheckSum(10) — the canonical wire form.
+    /// MsgSeqNum(34), and CheckSum(10) - the canonical wire form.
     pub fn encode(&self, begin_string: &str, seq_num: u64) -> Result<Vec<u8>, FixError> {
         // Body = tags after 9 through the last field, each "t=v\x01".
         let mut body = String::new();
@@ -190,7 +190,7 @@ pub fn build_logout(
     m.encode(begin, seq)
 }
 
-/// Build Heartbeat(0) — optionally with TestReqID(112).
+/// Build Heartbeat(0) - optionally with TestReqID(112).
 pub fn build_heartbeat(
     begin: &str,
     seq: u64,
@@ -226,7 +226,7 @@ pub fn build_test_request(
         .encode(begin, seq)
 }
 
-/// Build ResendRequest(2) — `end_seq = 0` means "until last message"
+/// Build ResendRequest(2) - `end_seq = 0` means "until last message"
 ///.
 pub fn build_resend_request(
     begin: &str,
@@ -245,7 +245,7 @@ pub fn build_resend_request(
         .encode(begin, seq)
 }
 
-/// Build SequenceReset(4) — gap-fill (`gap_fill=true`) or reset.
+/// Build SequenceReset(4) - gap-fill (`gap_fill=true`) or reset.
 pub fn build_seq_reset(
     begin: &str,
     seq: u64,
@@ -299,7 +299,7 @@ pub fn build_new_order(
     side: char,     // FIX side: '1' buy, '5' sell short, 'T' sell short exempt
     ord_type: char, // '1' market, '2' limit, '3' stop, '4' stop-limit
     qty: &str,
-    price: Option<&str>, // decimal strings — scale already resolved
+    price: Option<&str>, // decimal strings - scale already resolved
     tif: char,
     extra: &[(u32, String)],
 ) -> Result<Vec<u8>, FixError> {
@@ -348,7 +348,7 @@ pub fn build_cancel(
         .encode(begin, seq)
 }
 
-/// Build OrderCancelReplaceRequest(G) — cancel-replace chain.
+/// Build OrderCancelReplaceRequest(G) - cancel-replace chain.
 #[allow(clippy::too_many_arguments)]
 pub fn build_replace(
     begin: &str,
@@ -378,7 +378,7 @@ pub fn build_replace(
 }
 
 // ---------------------------------------------------------------------------
-// Execution report parse (client role — Router normalizes)
+// Execution report parse (client role - Router normalizes)
 // ---------------------------------------------------------------------------
 
 /// ExecutionReport(8) execution types (OrdRejReason mapped by the Router).
@@ -410,7 +410,7 @@ impl ExecType {
     }
 }
 
-/// A parsed ExecutionReport — the Router's normalization input.
+/// A parsed ExecutionReport - the Router's normalization input.
 #[derive(Debug, Clone, PartialEq)]
 pub struct ExecutionReport {
     pub exec_type: ExecType,

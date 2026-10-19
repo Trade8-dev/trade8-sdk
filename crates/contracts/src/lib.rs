@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! trade8 contracts — shared domain types for the vertical.
+//! trade8 contracts - shared domain types for the vertical.
 //!
 //! File-purpose index:
 //! - `enums.rs`: char-code enums (side, order type, TIF, trader state,

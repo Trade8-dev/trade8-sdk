@@ -6,7 +6,7 @@
 //! trade8 fixed-point numeric core.
 //!
 //! Desk-side convention (trade8 master design §10 T9): prices are `i128`
-//! scaled by a **per-instrument exponent** — equities default ×10⁴,
+//! scaled by a **per-instrument exponent** - equities default ×10⁴,
 //! futures per contract, crypto ×10⁸. Quantities are decimal-scaled `u64`.
 //! One numeric convention shared with the exchange8 vertical
 //! (`exchange8-fixed`) so orders routed desk→venue never rescale.
@@ -138,7 +138,7 @@ impl Price {
         })
     }
 
-    /// Checked subtraction of same-scale prices (`None` if negative result —
+    /// Checked subtraction of same-scale prices (`None` if negative result -
     /// desk prices don't go below zero).
     pub fn checked_sub(self, rhs: Price) -> Option<Price> {
         if self.scale != rhs.scale {
@@ -172,7 +172,7 @@ impl Price {
         }
     }
 
-    /// Render as a decimal string at the value's scale (display only —
+    /// Render as a decimal string at the value's scale (display only -
     /// the scaled integer is the wire/DB truth).
     pub fn to_decimal_string(self) -> String {
         let neg = self.raw < 0;
@@ -328,7 +328,7 @@ mod tests {
         let p = Price::equity(101_000);
         let q = Qty::shares(100);
         // Notional stays at price scale ×10⁴: 10.10 × 100 = 1010.00 → 10_100_000.
-        // (Beware: `10_100_000_00` parses as 1_010_000_000 — underscores are
+        // (Beware: `10_100_000_00` parses as 1_010_000_000 - underscores are
         // grouping separators, not scale markers.)
         assert_eq!(p.checked_notional(q), Some(10_100_000));
         assert_eq!(p.to_decimal_string(), "10.1000");

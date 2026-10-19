@@ -1,4 +1,4 @@
-# README.md: trade8 ouch — OUCH 3.1 Client-Role Codec
+# README.md: trade8 ouch - OUCH 3.1 Client-Role Codec
 
 > Audience: Trade8:Router. Golden byte layouts pinned in `src/lib.rs`.
 
@@ -29,14 +29,14 @@ graph LR
 
 ## 4. Key Traits and Data Structures
 
-- **`EnterOrder` / `CancelOrder`** — the outbound structures with
+- **`EnterOrder` / `CancelOrder`** - the outbound structures with
   `encode_enter_order` / `encode_cancel_order` (block types 'O'/'X',
   fixed-width, space/zero padded per spec).
-- **Enums** — `OuchTif` (O/I/K/M/P/X/T/D), `OuchSide` (B/S/S/T), 
+- **Enums** - `OuchTif` (O/I/K/M/P/X/T/D), `OuchSide` (B/S/S/T), 
   `OuchDisplay` (Y/N/P).
-- **`OuchInbound`** — parsed inbound variants incl. `Executed` and
+- **`OuchInbound`** - parsed inbound variants incl. `Executed` and
   `Replaced`.
-- **Framing** — `frame` / `read_frame` / `write_frame` (u16be length
+- **Framing** - `frame` / `read_frame` / `write_frame` (u16be length
   prefix), `frame_enter_order` convenience.
 
 ## 5. Rationale, Trade-offs, and Alternatives
@@ -44,7 +44,7 @@ graph LR
 - **Struct + explicit encode** over a generic field-dsl: OUCH's strictness
   (fixed widths, exact field order) is easier to prove with pinned
   byte-layout tests than with reflective serialization.
-- **Client role only** — no inbound order acceptance (a broker-facing
+- **Client role only** - no inbound order acceptance (a broker-facing
   server is out of scope).
 - **u16be framing** per the 3.1 spec.
 

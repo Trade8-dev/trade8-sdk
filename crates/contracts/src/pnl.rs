@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! PnL DTOs — positions, day summaries, opening balances, overnight
+//! PnL DTOs - positions, day summaries, opening balances, overnight
 //! reconciliation.
 //!
 //! (m_TotalFees/m_TotalGross/m_TotalNetRegion/m_TotalSharesExecutes/
@@ -12,7 +12,7 @@
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-/// Live position for (trader, symbol) — `trade8:pnl:position:updated`
+/// Live position for (trader, symbol) - `trade8:pnl:position:updated`
 /// payload. Signed size: positive long, negative short (the PnL concept
 /// of a signed position; trade8 order quantities themselves are unsigned).
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -41,7 +41,7 @@ impl Position {
     pub fn is_long(&self) -> bool {
         self.signed_size > 0
     }
-    /// Position value at a mark (scaled price × signed shares — the
+    /// Position value at a mark (scaled price × signed shares - the
     /// Risk max-position-value input).
     pub fn value_at(&self, mark_raw: i128) -> i128 {
         mark_raw * self.signed_size as i128
@@ -52,7 +52,7 @@ impl Position {
     }
 }
 
-/// Per-symbol day resume — the `pnl.symbol_resume` row shape
+/// Per-symbol day resume - the `pnl.symbol_resume` row shape
 /// (gross/fees/net/shares/max_net/lft).
 #[derive(Debug, Clone, Copy, Default, PartialEq, Serialize, Deserialize)]
 pub struct SymbolResume {
@@ -68,7 +68,7 @@ pub struct SymbolResume {
 }
 
 impl SymbolResume {
-    /// Fold a position update into the resume (idempotent per update —
+    /// Fold a position update into the resume (idempotent per update -
     /// the engine recomputes; this is the fold used by tests and the
     /// service's snapshot builder).
     pub fn fold(
@@ -88,7 +88,7 @@ impl SymbolResume {
     }
 }
 
-/// Trader day summary — `trade8:pnl:trader:summary` payload;
+/// Trader day summary - `trade8:pnl:trader:summary` payload;
 /// `ProfitAndLoss` field-for-field.
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct TraderPnlSummary {
@@ -105,7 +105,7 @@ pub struct TraderPnlSummary {
     pub lft: i128,
 }
 
-/// Office roll-up — `trade8:pnl:office:summary` payload.
+/// Office roll-up - `trade8:pnl:office:summary` payload.
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct OfficePnlSummary {
     pub office_id: String,
@@ -117,7 +117,7 @@ pub struct OfficePnlSummary {
     pub trader_count: u32,
 }
 
-/// Opening balance carried across sessions — `pnl.opening_balance`
+/// Opening balance carried across sessions - `pnl.opening_balance`
 /// row shape.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct OpeningBalance {

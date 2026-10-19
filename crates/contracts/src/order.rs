@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! Order + fill DTOs — the API shape and the event payload shape
+//! Order + fill DTOs - the API shape and the event payload shape
 //! (one type for both, per the platform's payload-completeness rule:
 //! consumers rebuild from events alone).
 //!
@@ -13,7 +13,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 // Leaf→leaf import: raw crate path by exception. The `trade8::`
 // namespace facade (principles §2.1) cannot be used inside leaf
-// crates — the facade depends on this crate, so importing it here
+// crates - the facade depends on this crate, so importing it here
 // would create a Cargo dependency cycle. Facade paths apply to
 // consumers (services/apps) only.
 use trade8_fixed::{Price, Qty};
@@ -58,7 +58,7 @@ pub struct Order {
 
 impl Order {
     /// Notional at the limit price (buying-power input). Market orders use
-    /// the provided reference mark (last quote/print) — Risk enforces.
+    /// the provided reference mark (last quote/print) - Risk enforces.
     pub fn notional(&self, mark: Option<Price>) -> Option<i128> {
         match self.price {
             Some(p) => p.checked_notional(self.qty),
@@ -82,7 +82,7 @@ pub struct NewOrderRequest {
     pub side: Side,
     pub order_type: OrderType,
     pub tif: TimeInForce,
-    /// Decimal strings — scale resolved against the instrument.
+    /// Decimal strings - scale resolved against the instrument.
     pub qty: String,
     pub price: Option<String>,
     pub stop_price: Option<String>,
@@ -101,7 +101,7 @@ pub struct ReplaceOrderRequest {
     pub price: Option<String>,
 }
 
-/// A normalized fill/exec — the payload of `trade8:router:fill:executed`,
+/// A normalized fill/exec - the payload of `trade8:router:fill:executed`,
 /// persisted in `router.order_transaction`.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Fill {
@@ -132,7 +132,7 @@ pub enum FillState {
     Reject,
 }
 
-/// Per-fill fee breakdown — fee columns
+/// Per-fill fee breakdown - fee columns
 /// (SEC/activity/gateway/execution/clearing + currency), kept as scaled
 /// i128 amounts with a currency code each.
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]

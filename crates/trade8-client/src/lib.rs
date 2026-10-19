@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! trade8-client — the typed envelope contract for the Desk↔Risk↔Router
+//! trade8-client - the typed envelope contract for the Desk↔Risk↔Router
 //! direct low-latency path (master design §5.2).
 //!
 //! The hot path is NOT bus-relayed: services exchange these envelopes
@@ -39,7 +39,7 @@ pub use cron::{default_schedules, register, register_defaults, BootSchedule};
 pub enum ClientError {
     #[error("encode error: {0}")]
     Encode(String),
-    #[error("queue full (bounded — hot path must never grow unbounded)")]
+    #[error("queue full (bounded - hot path must never grow unbounded)")]
     QueueFull,
     #[error("channel closed")]
     Closed,
@@ -51,9 +51,9 @@ pub enum ClientError {
 pub struct StreamEnvelope {
     pub event_type: String,
     pub env_id: uuid::Uuid,
-    /// Idempotency key — dedupes resubmit/replay (effectively-once).
+    /// Idempotency key - dedupes resubmit/replay (effectively-once).
     pub idempotency_key: String,
-    /// Monotonic per-(producer, kind) sequence — gap detection.
+    /// Monotonic per-(producer, kind) sequence - gap detection.
     pub seq: u64,
     pub payload: serde_json::Value,
 }
@@ -113,7 +113,7 @@ impl OutboundStream {
         self.kind
     }
 
-    /// Stamp the next sequence and enqueue. `try_send` — full queue is an
+    /// Stamp the next sequence and enqueue. `try_send` - full queue is an
     /// error, not a block (the caller decides backoff policy).
     pub fn try_send(
         &self,
@@ -147,7 +147,7 @@ pub mod calls {
     pub const ROUTE_ORDER_ACK: &str = "trade8:router:order:routed_ack";
 }
 
-/// Deduplication window for envelope replay (idempotency-key memory) —
+/// Deduplication window for envelope replay (idempotency-key memory) -
 /// bounded LRU so crash-replay can't grow it unbounded.
 #[derive(Debug, Default)]
 pub struct DedupeWindow {
@@ -166,7 +166,7 @@ impl DedupeWindow {
     }
 
     /// Returns `true` when the key is fresh (first sighting), `false`
-    /// when it was already seen (duplicate — drop).
+    /// when it was already seen (duplicate - drop).
     pub fn admit(&mut self, key: &str) -> bool {
         if self.seen.contains_key(key) {
             return false;

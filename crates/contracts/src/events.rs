@@ -3,24 +3,24 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! Event-type constants (master design §7.1) — the platform colon
+//! Event-type constants (master design §7.1) - the platform colon
 //! convention `trade8:{service}:{resource}:{operation}` (AGENTS.md:
 //! colons only, never dots).
 //!
 //! Payloads are the DTOs in this crate (order.rs, marketdata.rs, pnl.rs)
-//! — a trigger must run from the payload alone (payload-completeness).
+//! - a trigger must run from the payload alone (payload-completeness).
 
 /// Event-type registry: (constant, literal).
 macro_rules! event_types {
     ($(pub const $name:ident: &str = $lit:literal;)*) => {
-        /// All trade8 event types — asserted colon-named, no dots (AGENTS.md).
+        /// All trade8 event types - asserted colon-named, no dots (AGENTS.md).
         pub const ALL: &[&str] = &[$($lit),*];
         $(pub const $name: &str = $lit;)*
     };
 }
 
 event_types! {
-    // Desk — order lifecycle
+    // Desk - order lifecycle
     pub const ORDER_SUBMITTED: &str = "trade8:desk:order:submitted";
     pub const ORDER_ACCEPTED: &str = "trade8:desk:order:accepted";
     pub const ORDER_REJECTED: &str = "trade8:desk:order:rejected";
@@ -38,7 +38,7 @@ event_types! {
     pub const BORROW_UPDATED: &str = "trade8:desk:borrow:updated";
     pub const KEYSTROKE_LOGGED: &str = "trade8:desk:keystroke:logged";
 
-    // Router — fills + sessions
+    // Router - fills + sessions
     pub const FILL_EXECUTED: &str = "trade8:router:fill:executed";
     pub const FILL_REJECTED: &str = "trade8:router:fill:rejected";
     pub const FILL_CANCELLED: &str = "trade8:router:fill:cancelled";
@@ -68,7 +68,7 @@ event_types! {
     pub const OVERNIGHT_MISMATCH: &str = "trade8:pnl:overnight:mismatch";
 }
 
-/// Bus stream family for a service — the MemBus key segment
+/// Bus stream family for a service - the MemBus key segment
 /// (`mbus:{env}:{family}`). One family per producing service keeps
 /// per-(service, family) sequences monotonic (membus design §5.5).
 pub const FAMILY_DESK: &str = "desk";

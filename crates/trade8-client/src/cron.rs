@@ -7,15 +7,15 @@
 //!
 //! Trade8 services delegate ALL scheduling to Sentin8:Cron: each service
 //! registers its default schedules at boot via a certificate-presenting
-//! caller (the `{service_type}-cron` workload certificate — CERTFREE-4V)
+//! caller (the `{service_type}-cron` workload certificate - CERTFREE-4V)
 //! and exposes the proxy-back endpoint Cron calls when the schedule fires:
-//! - Desk — session choreography: preopen 04:00, open 09:30,
+//! - Desk - session choreography: preopen 04:00, open 09:30,
 //!   close-pending 15:55, close 16:00 (config-tz).
-//! - Bars — EOD finalization 16:15 + the daily bucket reset.
-//! - Router — journal retention purge 02:00 (30 d default).
+//! - Bars - EOD finalization 16:15 + the daily bucket reset.
+//! - Router - journal retention purge 02:00 (30 d default).
 //!
 //! Registration is idempotent-per-day (Cron owns dedup by domain+name;
-//! a duplicate create is logged, not fatal — the boot pass retries
+//! a duplicate create is logged, not fatal - the boot pass retries
 //! cleanly on restart).
 
 use crate::ServiceCaller;
@@ -29,7 +29,7 @@ pub struct BootSchedule {
     pub name: String,
     /// Cron expression (5-field, Cron server tz).
     pub cron_expression: String,
-    /// Target config — must carry `callback_url` (the proxy-back).
+    /// Target config - must carry `callback_url` (the proxy-back).
     pub target_config: serde_json::Value,
 }
 
@@ -121,7 +121,7 @@ pub async fn register(cron: &ServiceCaller, s: &BootSchedule) -> Result<(), Stri
 }
 
 /// Boot-time registration of a service's default schedule set. Failures
-/// are logged, not fatal (Cron may be booting concurrently — the next
+/// are logged, not fatal (Cron may be booting concurrently - the next
 /// restart re-registers; Cron dedups by domain+type).
 pub async fn register_defaults(auth_issuer: &str, cron_url: &str, service_type: &str, port: u16) {
     let schedules = default_schedules(service_type, port);

@@ -3,27 +3,27 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! Market-data DTOs — L1 quotes, L2 depth, imbalance, trade prints, bars.
+//! Market-data DTOs - L1 quotes, L2 depth, imbalance, trade prints, bars.
 //!
 //! (`LV1Update`, `LV2Update` with `FeedType_e`), `ImbalanceUpdate` (extends
 //! `TechUpdate`), `Broker/Library/Snapshot/ChartDB` (bars), `SYMBOL_PRICE`.
 
 use serde::{Deserialize, Serialize};
 // Leaf→leaf import: raw crate path by exception (see order.rs).
-// The `trade8::` facade depends on this crate — importing it here
+// The `trade8::` facade depends on this crate - importing it here
 // would be a dependency cycle.
 use trade8_fixed::Price;
 use uuid::Uuid;
 
 use crate::enums::FeedType;
 
-/// L1 top-of-quote update — `trade8:feed:quote:updated` payload
+/// L1 top-of-quote update - `trade8:feed:quote:updated` payload
 ///.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct QuoteUpdate {
     pub symbol_id: Uuid,
     pub symbol_name: String,
-    /// Milliseconds from market midnight — the venue
+    /// Milliseconds from market midnight - the venue
     /// clock; wall-clock `ts` rides the envelope.
     pub venue_ts_ms: u64,
     pub bid_price: Price,
@@ -40,7 +40,7 @@ impl QuoteUpdate {
     }
 }
 
-/// L2 price-level delta — `trade8:feed:depth:updated` payload
+/// L2 price-level delta - `trade8:feed:depth:updated` payload
 ///.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DepthUpdate {
@@ -60,7 +60,7 @@ pub struct DepthUpdate {
     pub sequence: u64,
 }
 
-/// Auction imbalance — `trade8:feed:imbalance:updated` payload
+/// Auction imbalance - `trade8:feed:imbalance:updated` payload
 ///.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ImbalanceUpdate {
@@ -80,7 +80,7 @@ pub struct ImbalanceUpdate {
     pub paired_volume: u64,
 }
 
-/// Consolidated trade print — `trade8:feed:trade:printed` payload; the
+/// Consolidated trade print - `trade8:feed:trade:printed` payload; the
 /// Bars aggregation input.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct TradePrint {
@@ -93,7 +93,7 @@ pub struct TradePrint {
     pub seq: u64,
 }
 
-/// A closed OHLCV bar — `trade8:bars:bar:closed` payload.
+/// A closed OHLCV bar - `trade8:bars:bar:closed` payload.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub struct Bar {
     pub symbol_id: Uuid,
@@ -136,7 +136,7 @@ impl Bar {
     }
 }
 
-/// Bar intervals — the fixed service set (bars design §2).
+/// Bar intervals - the fixed service set (bars design §2).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum BarInterval {
     #[serde(rename = "1s")]
@@ -188,7 +188,7 @@ impl BarInterval {
     }
 }
 
-/// A fired price alert — `trade8:feed:alert:fired` payload.
+/// A fired price alert - `trade8:feed:alert:fired` payload.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct AlertFired {
     pub alert_id: Uuid,
@@ -202,7 +202,7 @@ pub struct AlertFired {
     pub at_ms: u64,
 }
 
-/// Feed-link health — `trade8:feed:feed:status` payload.
+/// Feed-link health - `trade8:feed:feed:status` payload.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct FeedStatus {
     pub link_id: Uuid,

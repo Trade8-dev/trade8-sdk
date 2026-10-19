@@ -1,4 +1,4 @@
-# README.md: trade8 fixed — Fixed-Point Price/Quantity Core
+# README.md: trade8 fixed - Fixed-Point Price/Quantity Core
 
 > Audience: every trade8 consumer (services, crates, app converters).
 > Scale conventions: `design/sentin8-trade8-technical-design.md` §10.
@@ -29,30 +29,30 @@ graph LR
 
 ## 4. Key Traits and Data Structures
 
-- **`struct Price`** — `{raw: i128, scale: u8}` with scale constructors
+- **`struct Price`** - `{raw: i128, scale: u8}` with scale constructors
   (`equity` ×10⁴, `from_scaled`, `parse_decimal`), rescaling, checked add/
   sub/ticks, `checked_notional`, and exact `to_decimal_string`.
-- **`struct Qty`** — `{raw: u64, scale: u8}` (shares integer, fractional
+- **`struct Qty`** - `{raw: u64, scale: u8}` (shares integer, fractional
   scale 8) with `parse_decimal`, `rescale`.
-- **Tick helpers** — `tick_size_for(price, bands, fallback)` and
+- **Tick helpers** - `tick_size_for(price, bands, fallback)` and
   `is_on_tick` over ascending band tables.
 
 ## 5. Rationale, Trade-offs, and Alternatives
 
-- **i128 raw + u8 scale** — enough range for scaled notionals with
+- **i128 raw + u8 scale** - enough range for scaled notionals with
   headroom; cheap copy semantics on the hot path. Rejected: a decimal
   library (allocation + slower than raw ints at these scales), f64 (the
   bug class this crate exists to kill).
-- **Explicit scale, not implicit** — payloads carry the scale; rescale is
+- **Explicit scale, not implicit** - payloads carry the scale; rescale is
   explicit at boundaries. Rejected: fixed single scale (crypto needs 8).
-- **Checked arithmetic returning Results** — overflow is a caller-visible
+- **Checked arithmetic returning Results** - overflow is a caller-visible
   error, never a panic or wrap.
 
 ## 6. Internal Implementation & Invariants (Private Design)
 
 - Scale is the power of ten of the *fractional* digits (×10⁴ = 4); every
   cross-scale op first `rescale`s to the coarser/finer side.
-- Ticks/bands are raw-integer compares — no string math on the hot path.
+- Ticks/bands are raw-integer compares - no string math on the hot path.
 - `to_decimal_string` is exact (no rounding).
 
 ## 7. Unresolved Questions / Future Designs

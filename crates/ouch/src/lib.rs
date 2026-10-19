@@ -3,8 +3,8 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! trade8 OUCH 3.1 codec — order-entry **client role** (router design
-//! §4.1) — binary framed messages for NASDAQ-style OUCH links.
+//! trade8 OUCH 3.1 codec - order-entry **client role** (router design
+//! §4.1) - binary framed messages for NASDAQ-style OUCH links.
 //!
 //! Scope: EnterOrder, CancelOrder, ReplaceOrder outbound; Accepted,
 //! Rejected, Canceled, Executed, Replaced, CanceledByOther inbound; the
@@ -169,7 +169,7 @@ impl OuchDisplay {
     }
 }
 
-/// An EnterOrder (0x00 'O') block body — the Router builds one per
+/// An EnterOrder (0x00 'O') block body - the Router builds one per
 /// accepted order routed to an OUCH destination.
 #[derive(Debug, Clone, PartialEq)]
 pub struct EnterOrder {
@@ -186,7 +186,7 @@ pub struct EnterOrder {
     pub cross_type: u8,
 }
 
-/// Encode an EnterOrder block (no frame — the caller frames).
+/// Encode an EnterOrder block (no frame - the caller frames).
 pub fn encode_enter_order(o: &EnterOrder) -> Result<Vec<u8>, OuchError> {
     let mut body =
         Vec::with_capacity(1 + TOKEN_LEN + 1 + 4 + STOCK_LEN + 8 + 1 + FIRM_LEN + 1 + 1 + 4 + 4);
@@ -242,7 +242,7 @@ pub fn read_frame<R: Read>(r: &mut R) -> Result<Vec<u8>, OuchError> {
 }
 
 // ---------------------------------------------------------------------------
-// Inbound messages (client role — Router normalizes)
+// Inbound messages (client role - Router normalizes)
 // ---------------------------------------------------------------------------
 
 /// Inbound OUCH event (client role receives order-state replies).

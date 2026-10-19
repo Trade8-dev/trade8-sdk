@@ -5,9 +5,9 @@
 
 //! Shared char-code enums for the trade8 domain.
 //!
-//! Wire values are the durable contract — order sides `B/S/T`, trader
+//! Wire values are the durable contract - order sides `B/S/T`, trader
 //! states ACT/CLS/RSK/CMP/DIS/INA, destination visibility `B/D/H`, and the
-//! feed-type codes — encoded verbatim by the FIX/OUCH codecs and the event
+//! feed-type codes - encoded verbatim by the FIX/OUCH codecs and the event
 //! payloads.
 
 use serde::{Deserialize, Serialize};
@@ -80,7 +80,7 @@ impl OrderType {
             _ => None,
         }
     }
-    /// Wire/DB string form (the serde rename — code).
+    /// Wire/DB string form (the serde rename - code).
     pub fn serde_str(self) -> String {
         serde_json::to_value(self)
             .ok()
@@ -88,7 +88,7 @@ impl OrderType {
             .unwrap_or_else(|| "2".into())
     }
     /// Parse the wire/DB string form (deliberately not the
-    /// `FromStr::from_str` trait — the wire parse is fallible-with-None
+    /// `FromStr::from_str` trait - the wire parse is fallible-with-None
     /// by design and callers disambiguate via this name).
     pub fn parse_wire(s: &str) -> Option<Self> {
         let c = s.chars().next()?;

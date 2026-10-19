@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! Reject-code catalog — typed.
+//! Reject-code catalog - typed.
 //!
 //! Registered into `sentin8_vertical_error_codes` at enroll via the
 //! service registration; surfaced to clients as `{code, message, params}`.
@@ -84,7 +84,7 @@ pub enum RejectCode {
 }
 
 impl RejectCode {
-    /// Parse the wire string (the serde rename) back to the enum — Risk
+    /// Parse the wire string (the serde rename) back to the enum - Risk
     /// verdict codes map to the Desk catalog. Unknown → None.
     pub fn from_wire(s: &str) -> Option<RejectCode> {
         serde_json::from_value(serde_json::Value::String(s.to_string())).ok()
@@ -167,7 +167,7 @@ impl RejectCode {
     }
 }
 
-/// A rejection payload — carried by `trade8:desk:order:rejected` and the
+/// A rejection payload - carried by `trade8:desk:order:rejected` and the
 /// API 422 body.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Rejection {

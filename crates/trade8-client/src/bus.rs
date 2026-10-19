@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! Bus consumer helper — the canonical SSE consume loop for trade8
+//! Bus consumer helper - the canonical SSE consume loop for trade8
 //! services (the payments-worker pattern over `sentin8-bus-client`):
 //! connect with a certificate-presenting Bus client, stream
 //! `bus:{env}:{family}`, dispatch typed events, ack on success / nack
@@ -17,7 +17,7 @@ use futures_util::StreamExt;
 
 use crate::StreamEnvelope;
 
-/// Reconnect delay when the Bus SSE stream drops (memory rule: 2s max —
+/// Reconnect delay when the Bus SSE stream drops (memory rule: 2s max -
 /// a longer wait hides a bug).
 const RECONNECT_DELAY: std::time::Duration = std::time::Duration::from_secs(2);
 
@@ -46,7 +46,7 @@ impl BusMessage {
     }
 }
 
-/// Handler outcome — ack or nack (Bus retries nacks up to max_retries,
+/// Handler outcome - ack or nack (Bus retries nacks up to max_retries,
 /// then lands the message in the DLQ for manual replay).
 pub enum HandleOutcome {
     Ack,
@@ -123,7 +123,7 @@ pub async fn run_consumer<F, Fut>(
                         let _ = bus.ack(&family, &group, &message_id).await;
                     }
                     HandleOutcome::Nack => {
-                        // Nack (retry→DLQ) then ack to advance the cursor —
+                        // Nack (retry→DLQ) then ack to advance the cursor -
                         // the DLQ owns poison messages.
                         let _ = bus.nack(&family, &group, &message_id, Some(1)).await;
                         let _ = bus.ack(&family, &group, &message_id).await;

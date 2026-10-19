@@ -3,19 +3,19 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! Service-to-service caller — the Desk→Risk direct authorize call
+//! Service-to-service caller - the Desk→Risk direct authorize call
 //! (Desk→Risk authorize) and future hot-path calls (Router ack, Feed BBO read).
 //!
 //! Pattern: mint-or-load the CALLING service's workload certificate
-//! (CERTFREE-4V — `ensure_workload_certificate`) and wrap it in the
+//! (CERTFREE-4V - `ensure_workload_certificate`) and wrap it in the
 //! mTLS transport behind `Sentin8HttpClient` (correlation-id propagation
-//! + TLS context headers). The TLS handshake IS the identity — the
+//! + TLS context headers). The TLS handshake IS the identity - the
 //! receiving service's TLS layer authenticates the certificate and the
 //! enroll-published registry map authorizes the scopes; no bearer token
 //! exists on this path.
 //!
 //! The hot path is point-to-point over Sentin8:TLS (master design §5.2)
-//! — NOT bus-relayed; every accepted mutation is mirrored to the Bus
+//! - NOT bus-relayed; every accepted mutation is mirrored to the Bus
 //! outbox-first by the caller.
 
 use std::sync::Arc;
@@ -35,9 +35,9 @@ pub struct ServiceCaller {
 /// service's `M2M_GRANTS` declaration so `vertical enroll` publishes
 /// its registry-map row.
 ///
-/// - `auth_issuer` — Auth base URL.
-/// - `base_url` — target service base URL (e.g. `https://risk.<env>...`).
-/// - `service_name` — the CALLING service's registered workload name
+/// - `auth_issuer` - Auth base URL.
+/// - `base_url` - target service base URL (e.g. `https://risk.<env>...`).
+/// - `service_name` - the CALLING service's registered workload name
 ///   (e.g. `trade8:desk`, `trade8:desk:feed`).
 pub async fn build_caller(
     auth_issuer: &str,

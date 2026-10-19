@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Trade8:SDK
 // SPDX-License-Identifier: Apache-2.0
 
-//! Risk authorize contract — the Desk↔Risk hot-path request/verdict
+//! Risk authorize contract - the Desk↔Risk hot-path request/verdict
 //! (risk design §2, §4). One batch call, itemized trace, µs budget.
 //!
 
@@ -17,7 +17,7 @@ use crate::enums::{RiskLimitKind, TraderState};
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct AuthorizeRequest {
     pub env_id: Uuid,
-    /// The acting user (Auth sub) — limits/trader-state scope key.
+    /// The acting user (Auth sub) - limits/trader-state scope key.
     pub usr_id: String,
     pub office_id: String,
     pub symbol_id: Uuid,
@@ -28,14 +28,14 @@ pub struct AuthorizeRequest {
     /// Signed quantity (shares). Short opens are positive qty with
     /// side 'S'/'T'.
     pub qty: u64,
-    /// Limit price scaled (None for market — Risk uses the mark).
+    /// Limit price scaled (None for market - Risk uses the mark).
     pub price_raw: Option<i128>,
     pub price_scale: u8,
     /// Last consolidated mark (Feed snapshot via Desk).
     pub mark_raw: Option<i128>,
     /// Order intent for state checks: `open` | `close` | `cancel` | `replace`.
     pub intent: Intent,
-    /// Existing position for this (trader, symbol) — the position-limit
+    /// Existing position for this (trader, symbol) - the position-limit
     /// inputs (Risk keeps authoritative copies; Desk passes its view for
     /// the verdict trace).
     pub current_position: i64,
@@ -73,7 +73,7 @@ pub enum Intent {
 }
 
 /// One check outcome in the verdict trace (persisted on reject for the
-/// audit trail — desk design §4.2).
+/// audit trail - desk design §4.2).
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct CheckResult {
     /// Which check family (risk design §2: 1..10).
@@ -111,7 +111,7 @@ pub enum CheckKind {
     UptickRule,
 }
 
-/// The verdict — one `authorize` call, all checks, itemized.
+/// The verdict - one `authorize` call, all checks, itemized.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct AuthorizeVerdict {
     pub allowed: bool,
@@ -146,7 +146,7 @@ impl AuthorizeVerdict {
 }
 
 /// A limit row as loaded into Risk's snapshot cache
-/// (risk design §4 — arc-swap snapshots, no DB on the authorize path).
+/// (risk design §4 - arc-swap snapshots, no DB on the authorize path).
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct LimitRow {
     pub usr_id: Option<String>,
@@ -161,7 +161,7 @@ pub struct LimitRow {
 }
 
 impl LimitRow {
-    /// Effective value (override wins when set — ).
+    /// Effective value (override wins when set - ).
     pub fn effective(&self) -> i128 {
         self.override_value.unwrap_or(self.value)
     }

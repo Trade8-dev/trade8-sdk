@@ -1,4 +1,4 @@
-# README.md: trade8 contracts — Shared Domain Types
+# README.md: trade8 contracts - Shared Domain Types
 
 > Audience: consumers of the vertical's type vocabulary (services, apps,
 > strategies). Wire-level construction in `DESIGN.md`; the vertical map in
@@ -44,37 +44,37 @@ graph TD
 
 ## 4. Key Traits and Data Structures
 
-- **`OrderState`** — the lifecycle enum with `can_transition` (the
+- **`OrderState`** - the lifecycle enum with `can_transition` (the
   legality table: Pending→Accepted→Routed→PartiallyFilled→
   Filled/Cancelled/Replaced…); the engine-side authority.
-- **`RejectCode`** — 31 stable reject reasons with `from_wire`,
+- **`RejectCode`** - 31 stable reject reasons with `from_wire`,
   `registry_id`, `message`.
-- **`events`** — the `trade8:{service}:{resource}:{operation}` registry
+- **`events`** - the `trade8:{service}:{resource}:{operation}` registry
   (`order:submitted/accepted/rejected/cancelled/replaced/flatten/overnight…`,
   `router:fill:*`, `risk:limit:updated`, `feed:*`, `bars:*`, `pnl:*`) plus
   `FAMILY_*` stream-family constants.
-- **DTO families** — order snapshots + fill/fee shapes; market-data
+- **DTO families** - order snapshots + fill/fee shapes; market-data
   envelopes (`QuoteUpdate…Bar` with ×10⁴ price fields); P&L shapes;
   the `AuthorizeRequest`/`AuthorizeVerdict` hot contract.
 
 ## 5. Rationale, Trade-offs, and Alternatives
 
-- **Glob re-exports from `lib.rs`** — one flat surface for vertical
+- **Glob re-exports from `lib.rs`** - one flat surface for vertical
   consumers (`trade8::contracts::OrderState`); module paths remain for
   precision. Rejected: per-module re-export ceremony (import churn).
-- **Wire strings as the enum serialization** — serde renames encode the
+- **Wire strings as the enum serialization** - serde renames encode the
   exact wire values the legacy codecs expect, keeping FIX/OUCH adapters
   byte-true without translation layers.
 - **State machine in the DTO crate** (not the engine): both Desk (enforcer)
   and any test/replay tooling need the same legality table.
-- **Event-name tests in the crate** — the naming convention is enforced
+- **Event-name tests in the crate** - the naming convention is enforced
   where the constants live, failing at test time rather than at transport.
 
 ## 6. Internal Implementation & Invariants (Private Design)
 
 - Event-type constants are `pub const &str` built exactly once in
   `events.rs`; unit tests assert the colon-naming and uniqueness.
-- `RejectCode` ids are stable integers (registry key) — never reorder.
+- `RejectCode` ids are stable integers (registry key) - never reorder.
 - All price/qty fields are `i128`/`u64` raws + explicit scale (×10⁴
   money, instrument ticks); no floats anywhere in the crate.
 - `serde` renames pin every wire string; changing one is a vertical
@@ -84,9 +84,9 @@ graph TD
 
 - Dead event constants (`catalog:updated`, `borrow:reserved/released/
   adjusted`, `risk:restriction:updated`, `desk:order:batch-requested`) are
-  declared but unemitted — prune or wire them (see service design docs).
+  declared but unemitted - prune or wire them (see service design docs).
 - Feed-type vocabulary breadth (venue feeds beyond the current set) may
-  grow `FeedType` variants — additive only.
+  grow `FeedType` variants - additive only.
 
 # DESIGN.md highlights
 
@@ -105,7 +105,7 @@ verdicts.
 
 # BUSINESS.md highlights
 
-**Business value**: one trade language for six services + the app — the
+**Business value**: one trade language for six services + the app - the
 reason order terms, reject reasons, P&L numbers, and event names agree
 everywhere the platform. Consumers: all trade8 services, strategies, and
 the etrader app DTO layer.

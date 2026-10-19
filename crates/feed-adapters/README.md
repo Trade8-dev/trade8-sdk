@@ -1,4 +1,4 @@
-# README.md: trade8 feed-adapters — Vendor Feed Adapter Crate
+# README.md: trade8 feed-adapters - Vendor Feed Adapter Crate
 
 > Audience: consumers (Trade8:Feed) and vendor-adapter authors.
 > `DESIGN.md`-level detail lives inline in `src/lib.rs`; the engine-facing
@@ -36,21 +36,21 @@ graph LR
 
 ## 4. Key Traits and Data Structures
 
-- **`trait FeedAdapter`** — `kind()` + `run(config, credentials, tx)` (the
+- **`trait FeedAdapter`** - `kind()` + `run(config, credentials, tx)` (the
   dyn-compatible boundary the supervisor drives).
 - **`AdapterKind`** (`Itch | Idc | FixMd | CryptoWs | Sim`) + `adapter_for`
   registry.
-- **`RawQuotePacket`** `{source_id, seq, bytes}` — the vendor-agnostic
+- **`RawQuotePacket`** `{source_id, seq, bytes}` - the vendor-agnostic
   envelope; **`RawRecord`** (`Bbo/Level/Print/Imbalance`) + `parse_itch_record`
-  — the internal normalized parse.
-- **`FeedLinkConfig`** — link row shape with `credentials_ref` (secret ref).
-- **`SymbolDirectory`** — vendor symbol → (symbol_id, price_scale) mapping.
+  - the internal normalized parse.
+- **`FeedLinkConfig`** - link row shape with `credentials_ref` (secret ref).
+- **`SymbolDirectory`** - vendor symbol → (symbol_id, price_scale) mapping.
 
 ## 5. Rationale, Trade-offs, and Alternatives
 
 - **dyn-compatible trait + registry**, not generics: adapter selection is
   runtime configuration (link rows), not compile-time.
-- **Bounded channel** `RawSender` — slow normalizer applies backpressure at
+- **Bounded channel** `RawSender` - slow normalizer applies backpressure at
   the adapter, protecting memory in bursts.
 - **Parse, don't interpret**: adapters emit raw records; business
   normalization (consolidation, alerts) stays in the service engine.
@@ -60,10 +60,10 @@ graph LR
 ## 6. Internal Implementation & Invariants (Private Design)
 
 - The Sim adapter replays scripted hex frames deterministically (same
-  script ⇒ same packets) — the unit-test foundation for the whole feed path.
+  script ⇒ same packets) - the unit-test foundation for the whole feed path.
 - ITCH framing accepts SoupTCP-style length prefixes with gap tracking;
   IDC records are line-delimited; the WS client hand-rolls RFC 6455
-  (masked text frames only) with bounds-checked reads — decode errors are
+  (masked text frames only) with bounds-checked reads - decode errors are
   typed `AdapterError`s, never panics.
 - `FixMd` maps to the sim adapter until the FIX market-data client lands.
 
