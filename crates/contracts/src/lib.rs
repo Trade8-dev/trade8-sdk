@@ -33,9 +33,9 @@ pub mod risk;
 pub use enums::*;
 pub use events::*;
 pub use marketdata::*;
-/// Price/Qty re-exported for schema registration (ToSchema bodies).
-pub use trade8_fixed::{Price, Qty};
 pub use order::*;
 pub use pnl::*;
 pub use reject::*;
 pub use risk::*;
+/// Price/Qty re-exported for schema registration (ToSchema bodies).
+pub use trade8_fixed::{Price, Qty};

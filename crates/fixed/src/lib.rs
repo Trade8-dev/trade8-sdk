@@ -196,7 +196,19 @@ impl Price {
 
 /// A decimal-scaled quantity. Equities: scale 0 (integer shares);
 /// crypto: scale 8.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, utoipa::ToSchema)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    Hash,
+    Serialize,
+    Deserialize,
+    utoipa::ToSchema,
+)]
 pub struct Qty {
     /// Scaled integer value.
     pub raw: u64,
