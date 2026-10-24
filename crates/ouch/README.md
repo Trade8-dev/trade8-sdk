@@ -1,4 +1,8 @@
 # trade8 ouch - OUCH 3.1 Client-Role Codec
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](../../../LICENSE)
+[![Built with Rust](https://img.shields.io/badge/Built%20with-Rust-orange.svg)](https://www.rust-lang.org/)
+[![Docs](https://img.shields.io/badge/docs/read-3aa757.svg)](https://trade8.dev/docs/sdk/facade)
+[![Website](https://img.shields.io/badge/website-trade8.dev-1a73e8.svg)](https://trade8.dev/docs/sdk)
 
 > Audience: Trade8:Router. Golden byte layouts pinned in `src/lib.rs`.
 
