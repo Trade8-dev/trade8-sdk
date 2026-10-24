@@ -1,4 +1,4 @@
-# README.md: trade8 fixed - Fixed-Point Price/Quantity Core
+# trade8 fixed - Fixed-Point Price/Quantity Core
 
 > Audience: every trade8 consumer (services, crates, app converters).
 > Scale conventions: `design/sentin8-trade8-technical-design.md` §10.
@@ -67,4 +67,4 @@ quantity parsing.
 
 ---
 
-**Design attribution:** trade8:fixed and its underlying concepts were designed by Hamid Jahanzad <Hamid@Jahanzad.com>.
+**Architecture & Design:** trade8:fixed and its underlying concepts were designed by [Hamid Jahanzad](https://www.linkedin.com/in/hamidjahanzad/).

@@ -1,4 +1,4 @@
-# README.md: trade8 ouch - OUCH 3.1 Client-Role Codec
+# trade8 ouch - OUCH 3.1 Client-Role Codec
 
 > Audience: Trade8:Router. Golden byte layouts pinned in `src/lib.rs`.
 
@@ -68,4 +68,4 @@ parse, framing roundtrip).
 
 ---
 
-**Design attribution:** trade8:ouch and its underlying concepts were designed by Hamid Jahanzad <Hamid@Jahanzad.com>.
+**Architecture & Design:** trade8:ouch and its underlying concepts were designed by [Hamid Jahanzad](https://www.linkedin.com/in/hamidjahanzad/).

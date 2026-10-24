@@ -1,4 +1,4 @@
-# README.md: trade8 feed-adapters - Vendor Feed Adapter Crate
+# trade8 feed-adapters - Vendor Feed Adapter Crate
 
 > Audience: consumers (Trade8:Feed) and vendor-adapter authors.
 > `DESIGN.md`-level detail lives inline in `src/lib.rs`; the engine-facing
@@ -79,4 +79,4 @@ framing, registry mapping.
 
 ---
 
-**Design attribution:** trade8:feed-adapters and its underlying concepts were designed by Hamid Jahanzad <Hamid@Jahanzad.com>.
+**Architecture & Design:** trade8:feed-adapters and its underlying concepts were designed by [Hamid Jahanzad](https://www.linkedin.com/in/hamidjahanzad/).

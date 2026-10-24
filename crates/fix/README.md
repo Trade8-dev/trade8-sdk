@@ -1,4 +1,4 @@
-# README.md: trade8 fix - FIX 4.2/4.4 Client-Role Codec
+# trade8 fix - FIX 4.2/4.4 Client-Role Codec
 
 > Audience: Trade8:Router. Wire-level details inline in `src/lib.rs`
   (golden byte layouts).
@@ -69,4 +69,4 @@ semantics, checksum rejection.
 
 ---
 
-**Design attribution:** trade8:fix and its underlying concepts were designed by Hamid Jahanzad <Hamid@Jahanzad.com>.
+**Architecture & Design:** trade8:fix and its underlying concepts were designed by [Hamid Jahanzad](https://www.linkedin.com/in/hamidjahanzad/).

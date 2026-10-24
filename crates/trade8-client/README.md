@@ -1,4 +1,4 @@
-# README.md: trade8-client - Platform Client Crate (Bus/Service/Cron)
+# trade8-client - Platform Client Crate (Bus/Service/Cron)
 
 > Audience: trade8 services consuming the bus, calling sibling services,
 > or registering schedules. Platform rules: `sentin8/design/sentin8-
@@ -99,4 +99,4 @@ cron schedule shapes, caller construction.
 
 ---
 
-**Design attribution:** trade8:trade8-client and its underlying concepts were designed by Hamid Jahanzad <Hamid@Jahanzad.com>.
+**Architecture & Design:** trade8:trade8-client and its underlying concepts were designed by [Hamid Jahanzad](https://www.linkedin.com/in/hamidjahanzad/).

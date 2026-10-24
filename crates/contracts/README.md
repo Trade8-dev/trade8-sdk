@@ -1,4 +1,4 @@
-# README.md: trade8 contracts - Shared Domain Types
+# trade8 contracts - Shared Domain Types
 
 > Audience: consumers of the vertical's type vocabulary (services, apps,
 > strategies). Wire-level construction in `DESIGN.md`; the vertical map in
@@ -112,4 +112,4 @@ the etrader app DTO layer.
 
 ---
 
-**Design attribution:** trade8:contracts and its underlying concepts were designed by Hamid Jahanzad <Hamid@Jahanzad.com>.
+**Architecture & Design:** trade8:contracts and its underlying concepts were designed by [Hamid Jahanzad](https://www.linkedin.com/in/hamidjahanzad/).
