@@ -123,9 +123,9 @@ pub trait FeedAdapter: Send + Sync {
 /// A pinned, boxed future (dyn-compat adapter signature).
 pub type BoxFuture<T> = std::pin::Pin<Box<dyn std::future::Future<Output = T> + Send>>;
 
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // Sim/replay adapter
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 /// A scripted packet timeline - deterministic replay for tests/demos.
 #[derive(Debug, Clone, PartialEq)]
@@ -195,9 +195,9 @@ pub fn hex_decode(s: &str) -> Option<Vec<u8>> {
     Some(out)
 }
 
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // Raw-record codecs (ITCH-style + IDC-style) - byte truth preserved
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 /// Parsed record kinds the normalizer consumes (post-adapter).
 #[derive(Debug, Clone, PartialEq)]
@@ -397,9 +397,9 @@ pub fn build_itch_print(symbol: &str, price: i128, qty: u32, seq: u32, ts_ms: u3
     b
 }
 
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // Registry
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 /// Build the adapter instance for a link kind. The trait-object registry
 /// the service calls per link row.
@@ -416,9 +416,9 @@ pub fn adapter_for(kind: AdapterKind) -> Arc<dyn FeedAdapter> {
     }
 }
 
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // ITCH listener - SoupBinTCP-style framed binary records
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 /// ITCH-style TCP listener: connects to `config.endpoint`
 /// (host:port), reads length-prefixed frames (u16be len | payload), wraps
@@ -480,9 +480,9 @@ impl FeedAdapter for ItchAdapter {
     }
 }
 
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // IDC-format adapter - record stream over a line/TCP endpoint
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 /// IDC-format adapter: connects to `config.endpoint`, reads
 /// newline-delimited records (`kind|symbol|price|qty|seq|ts`), and
@@ -559,9 +559,9 @@ impl FeedAdapter for IdcAdapter {
     }
 }
 
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // Crypto WS adapter - order-book snapshot+delta, trades
-// ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 /// Crypto WebSocket adapter (Coinbase/Bitfinex-style): connects to
 /// `config.ws_url`, subscribes `config.channels` (level2/ticker), and

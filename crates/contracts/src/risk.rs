@@ -161,7 +161,7 @@ pub struct LimitRow {
 }
 
 impl LimitRow {
-    /// Effective value (override wins when set - ).
+    /// Effective value (override wins when set).
     pub fn effective(&self) -> i128 {
         self.override_value.unwrap_or(self.value)
     }
