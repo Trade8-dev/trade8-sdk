@@ -5528,7 +5528,7 @@ dependencies = [
 
 [[package]]
 name = "trade8"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "trade8-client",
  "trade8-contracts",
